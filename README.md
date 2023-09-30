@@ -12,7 +12,7 @@
 
 ### Roadmap
 
-- [ ] ⚒ Criar entidade 'Usuario'
+- [ ] ⚒ Criar entidade `Usuario`
 - [ ] ⚒ Criar um CRUD simples
 - [ ] ✨ Implementar `/login`
 - [ ] ✨ Implementar `loginController`
