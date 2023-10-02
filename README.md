@@ -8,11 +8,11 @@
 
 | Route | Method | Requirements | Description | Returns |
 | ----- | ------ | ------------ | ----------- | ------- |
-| /login | POST |  body: ```{username: String, password: String}``` | Autentica o user |
+| /login | POST |  body: ```{email: String, senha: String}``` | Autentica o user |
 
 ### Roadmap
 
-- [ ] ⚒ Criar entidade `Usuario`
-- [ ] ⚒ Criar um CRUD simples
+- [x] ⚒ Criar entidade `Usuario`
+- [x] ⚒ Criar um CRUD simples
 - [ ] ✨ Implementar `/login`
 - [ ] ✨ Implementar `loginController`
