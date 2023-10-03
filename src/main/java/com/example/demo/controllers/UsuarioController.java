@@ -27,7 +27,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping(value = "/cadastro")
     public ResponseEntity<Usuario> insert(@Valid @RequestBody Usuario usuario){
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.insert(usuario));
     }
@@ -36,6 +36,16 @@ public class UsuarioController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         usuarioService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, usuario.getNome()));
+    }
+
+    @PostMapping(value = "/{email}")
+    public ResponseEntity<Usuario> findByEmail(@PathVariable String email) {
+        return ResponseEntity.status(HttpStatus.FOUND).body(usuarioService.findByEmail(email));
     }
 
 }
