@@ -40,7 +40,7 @@ public class UsuarioController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, usuario.getNome()));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, usuario));
     }
 
     @PostMapping(value = "/{email}")

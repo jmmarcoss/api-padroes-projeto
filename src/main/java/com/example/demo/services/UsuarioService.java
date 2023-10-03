@@ -35,11 +35,12 @@ public class UsuarioService {
     public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
 
     @Transactional
-    public Usuario updateUser(Long id, String nome) {
+    public Usuario updateUser(Long id, Usuario usuario) {
         return usuarioRepository.findById(id)
-                .map(usuario -> {
-                    usuario.setNome(nome);
-                    return usuarioRepository.save(usuario);
+                .map(novo -> {
+                    novo.setNome(usuario.getNome());
+                    novo.setSenha(usuario.getSenha());
+                    return usuarioRepository.save(novo);
                 }).orElseThrow(RuntimeException::new);
     }
 }
