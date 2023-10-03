@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,8 +29,10 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "/cadastro")
-    public ResponseEntity<Usuario> insert(@Valid @RequestBody Usuario usuario){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.insert(usuario));
+    public ResponseEntity<Usuario> insert(@Valid @RequestBody Usuario usuario, UriComponentsBuilder uriBuilder){
+        var novoUsuario = usuarioService.insert(usuario);
+        var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(novoUsuario);
     }
 
     @DeleteMapping(value = "/{id}")
