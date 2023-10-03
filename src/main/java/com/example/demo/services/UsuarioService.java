@@ -31,4 +31,15 @@ public class UsuarioService {
     public Usuario insert(Usuario usuario){
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
+
+    @Transactional
+    public Usuario updateUser(Long id, String nome) {
+        return usuarioRepository.findById(id)
+                .map(usuario -> {
+                    usuario.setNome(nome);
+                    return usuarioRepository.save(usuario);
+                }).orElseThrow(RuntimeException::new);
+    }
 }
