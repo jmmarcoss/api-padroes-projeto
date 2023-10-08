@@ -21,10 +21,8 @@ public class tratadorDeErros {
     }
 
     private record DadoErroValidacao(String campo, String mensagem){
-
         public DadoErroValidacao(FieldError erro){
             this(erro.getField(), erro.getDefaultMessage());
         }
-
     }
 }

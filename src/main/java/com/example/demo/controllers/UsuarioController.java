@@ -1,11 +1,15 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Usuario;
+import com.example.demo.records.DadosParaLogin;
 import com.example.demo.services.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -17,6 +21,9 @@ import java.util.List;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
+
+    @Autowired
+    private AuthenticationManager manager;
 
     @GetMapping
     public ResponseEntity<List<Usuario>> findAll(){
@@ -33,6 +40,13 @@ public class UsuarioController {
         var novoUsuario = usuarioService.insert(usuario);
         var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri();
         return ResponseEntity.created(uri).body(novoUsuario);
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity login(@RequestBody @Valid DadosParaLogin dados){
+        var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+        var authentication = manager.authenticate(token);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{id}")

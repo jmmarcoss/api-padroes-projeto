@@ -5,12 +5,15 @@ import com.example.demo.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @AllArgsConstructor
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     private UsuarioRepository usuarioRepository;
 
@@ -34,6 +37,11 @@ public class UsuarioService {
 
     public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return (UserDetails) usuarioRepository.findByEmail(username);
+    }
+
     @Transactional
     public Usuario updateUser(Long id, Usuario usuario) {
         return usuarioRepository.findById(id)
@@ -43,4 +51,5 @@ public class UsuarioService {
                     return usuarioRepository.save(novo);
                 }).orElseThrow(RuntimeException::new);
     }
+
 }
