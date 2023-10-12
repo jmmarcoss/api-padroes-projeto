@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Usuario;
+import com.example.demo.infra.security.TokenService;
 import com.example.demo.records.DadosParaLogin;
+import com.example.demo.records.TokenRecord;
 import com.example.demo.services.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,9 @@ public class UsuarioController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @GetMapping
     public ResponseEntity<List<Usuario>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
@@ -44,9 +49,10 @@ public class UsuarioController {
 
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody @Valid DadosParaLogin dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        var authentication = manager.authenticate(token);
-        return ResponseEntity.ok().build();
+        var tokenGerado = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+        var authentication = manager.authenticate(tokenGerado);
+        var token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        return ResponseEntity.ok(new TokenRecord(token));
     }
 
     @DeleteMapping(value = "/{id}")
