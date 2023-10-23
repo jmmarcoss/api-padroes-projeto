@@ -2,9 +2,11 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Usuario;
 import com.example.demo.infra.security.TokenService;
-import com.example.demo.records.DadosParaLogin;
-import com.example.demo.records.TokenRecord;
+import com.example.demo.records.usuario.DadosInsertUsuario;
+import com.example.demo.records.usuario.DadosParaLogin;
+import com.example.demo.records.token.TokenRecord;
 import com.example.demo.services.UsuarioService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,32 +42,43 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
 
+    @Transactional
     @PostMapping(value = "/cadastro")
-    public ResponseEntity<Usuario> insert(@Valid @RequestBody Usuario usuario, UriComponentsBuilder uriBuilder){
-        var novoUsuario = usuarioService.insert(usuario);
+    public ResponseEntity<Usuario> insert(@Valid @RequestBody DadosInsertUsuario usuario, UriComponentsBuilder uriBuilder){
+        var novoUsuario = usuarioService.insert(new Usuario(usuario));
         var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri();
         return ResponseEntity.created(uri).body(novoUsuario);
     }
 
+    @Transactional
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody @Valid DadosParaLogin dados){
-        var tokenGerado = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        var authentication = manager.authenticate(tokenGerado);
-        var token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
-        return ResponseEntity.ok(new TokenRecord(token));
+        try {
+            var tokenGerado = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+            var authentication = manager.authenticate(tokenGerado);
+            var token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+            return ResponseEntity.ok(new TokenRecord(token));
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
+    @Transactional
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         usuarioService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Transactional
     @PutMapping(value = "/{id}")
     public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, usuario));
     }
 
+    @Transactional
     @PostMapping(value = "/{email}")
     public ResponseEntity<Usuario> findByEmail(@PathVariable String email) {
         return ResponseEntity.status(HttpStatus.FOUND).body(usuarioService.findByEmail(email));

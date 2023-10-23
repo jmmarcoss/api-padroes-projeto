@@ -25,12 +25,10 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    @Transactional
     public void deleteById(Long id){
         usuarioRepository.deleteById(id);
     }
 
-    @Transactional
     public Usuario insert(Usuario usuario){
         return usuarioRepository.save(usuario);
     }
@@ -42,7 +40,6 @@ public class UsuarioService implements UserDetailsService {
         return (UserDetails) usuarioRepository.findByEmail(username);
     }
 
-    @Transactional
     public Usuario updateUser(Long id, Usuario usuario) {
         return usuarioRepository.findById(id)
                 .map(novo -> {

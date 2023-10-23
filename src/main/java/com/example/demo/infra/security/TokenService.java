@@ -3,13 +3,13 @@ package com.example.demo.infra.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.demo.entities.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 
 @Service
 public class TokenService {
@@ -27,6 +27,19 @@ public class TokenService {
             throw new RuntimeException("Erro ao gerar token", exception);
         }
     }
+    public String verificarToken(String tokenJWT){
+        try {
+            var algorithm = Algorithm.HMAC256("senhaaleatoriaporenquanto");
+            return JWT.require(algorithm)
+                    .withIssuer("Prateleira")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+        } catch (JWTVerificationException exception){
+            throw new RuntimeException("Token inválido ou expirado");
+        }
+    }
+
 
     private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

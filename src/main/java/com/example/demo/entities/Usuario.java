@@ -1,9 +1,7 @@
 package com.example.demo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.demo.records.usuario.DadosInsertUsuario;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -20,10 +18,13 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Entity
+@Table(name = "usuario")
 // interface para o spring security conseguir realizar o metodo de busca para login
 public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @NotBlank
     private String nome;
@@ -33,39 +34,44 @@ public class Usuario implements UserDetails {
     @NotBlank
     private String senha;
 
-    //controle de perfil
+    public Usuario(DadosInsertUsuario usuario) {
+        this.nome = usuario.nome();
+        this.email = usuario.email();
+        this.senha = usuario.senha();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return null;
     }
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return null;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }
