@@ -2,7 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Usuario;
 import com.example.demo.infra.security.TokenService;
-import com.example.demo.records.usuario.DadosInsertUsuario;
+import com.example.demo.records.usuario.DadosInsertGetUsuario;
 import com.example.demo.records.usuario.DadosParaLogin;
 import com.example.demo.records.token.TokenRecord;
 import com.example.demo.services.UsuarioService;
@@ -44,7 +44,7 @@ public class UsuarioController {
 
     @Transactional
     @PostMapping(value = "/cadastro")
-    public ResponseEntity<Usuario> insert(@Valid @RequestBody DadosInsertUsuario usuario, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<Usuario> insert(@Valid @RequestBody DadosInsertGetUsuario usuario, UriComponentsBuilder uriBuilder){
         var novoUsuario = usuarioService.insert(new Usuario(usuario));
         var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri();
         return ResponseEntity.created(uri).body(novoUsuario);
@@ -59,7 +59,6 @@ public class UsuarioController {
             var token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
             return ResponseEntity.ok(new TokenRecord(token));
         } catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 

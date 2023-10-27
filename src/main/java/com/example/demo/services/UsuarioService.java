@@ -1,10 +1,12 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Usuario;
+import com.example.demo.infra.exceptions.EmailJaExistente;
+import com.example.demo.infra.exceptions.NomeJaExistente;
+import com.example.demo.infra.exceptions.UsuarioNaoEncontrado;
+import com.example.demo.records.usuario.DadosInsertGetUsuario;
 import com.example.demo.repositories.UsuarioRepository;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,15 +24,21 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario findById(Long id){
-        return usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
+        return usuarioRepository.findById(id).orElseThrow(UsuarioNaoEncontrado::new);
     }
 
     public void deleteById(Long id){
+        if (!usuarioRepository.existsById(id)){
+            throw new UsuarioNaoEncontrado();
+        }
         usuarioRepository.deleteById(id);
     }
 
     public Usuario insert(Usuario usuario){
-        return usuarioRepository.save(usuario);
+        if (this.naoExisteEsteEmailENome(usuario)){
+            return usuarioRepository.save(usuario);
+        }
+        return null;
     }
 
     public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
@@ -41,12 +49,24 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario updateUser(Long id, Usuario usuario) {
-        return usuarioRepository.findById(id)
-                .map(novo -> {
-                    novo.setNome(usuario.getNome());
-                    novo.setSenha(usuario.getSenha());
-                    return usuarioRepository.save(novo);
-                }).orElseThrow(RuntimeException::new);
+        if (this.naoExisteEsteEmailENome(usuario)) {
+            return usuarioRepository.findById(id)
+                    .map(novo -> {
+                        novo.setNome(usuario.getNome());
+                        novo.setSenha(usuario.getSenha());
+                        return usuarioRepository.save(novo);
+                    }).orElseThrow(RuntimeException::new);
+        }
+       return null;
+    }
+
+    private boolean naoExisteEsteEmailENome(Usuario usuario){
+        if (usuarioRepository.existsByEmail(usuario.getEmail())){
+            throw new EmailJaExistente();
+        } else if (usuarioRepository.existsByNome(usuario.getNome())){
+            throw new NomeJaExistente();
+        }
+        return true;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import com.example.demo.records.usuario.DadosInsertUsuario;
+import com.example.demo.records.usuario.DadosInsertGetUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +24,6 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @NotBlank
     private String nome;
@@ -34,7 +33,7 @@ public class Usuario implements UserDetails {
     @NotBlank
     private String senha;
 
-    public Usuario(DadosInsertUsuario usuario) {
+    public Usuario(DadosInsertGetUsuario usuario) {
         this.nome = usuario.nome();
         this.email = usuario.email();
         this.senha = usuario.senha();
@@ -42,36 +41,36 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.senha;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

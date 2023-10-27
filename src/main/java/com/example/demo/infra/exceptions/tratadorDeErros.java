@@ -14,6 +14,22 @@ public class tratadorDeErros {
     public ResponseEntity tratarErro404(){
         return ResponseEntity.notFound().build();
     }
+
+    @ExceptionHandler(UsuarioNaoEncontrado.class)
+    public ResponseEntity usuarioNaoEncontrado(){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(EmailJaExistente.class)
+    public ResponseEntity emailJaExistente(){
+        return ResponseEntity.badRequest().body("Email já existente");
+    }
+
+    @ExceptionHandler(NomeJaExistente.class)
+    public ResponseEntity nomeJaExistente(){
+        return ResponseEntity.badRequest().body("Nome já existente");
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex){
         var erros = ex.getFieldErrors();
