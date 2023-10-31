@@ -32,6 +32,8 @@ public class Usuario implements UserDetails {
     private String email;
     @NotBlank
     private String senha;
+//    private Double tempoMedioPorPagina;
+//    private Double tempoTotalDeLeitura;
 
     public Usuario(DadosInsertGetUsuario usuario) {
         this.nome = usuario.nome();

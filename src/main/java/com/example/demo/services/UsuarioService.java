@@ -1,12 +1,13 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Usuario;
-import com.example.demo.infra.exceptions.EmailJaExistente;
-import com.example.demo.infra.exceptions.NomeJaExistente;
-import com.example.demo.infra.exceptions.UsuarioNaoEncontrado;
-import com.example.demo.records.usuario.DadosInsertGetUsuario;
+import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
+import com.example.demo.infra.exceptions.usuario.NomeJaExistente;
+import com.example.demo.infra.exceptions.usuario.UsuarioNaoEncontrado;
+import com.example.demo.infra.security.Criptografia;
 import com.example.demo.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +19,8 @@ import java.util.List;
 public class UsuarioService implements UserDetailsService {
 
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private Criptografia passwordEncoder;
 
     public List<Usuario> findAll(){
         return usuarioRepository.findAll();
@@ -35,7 +38,9 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario insert(Usuario usuario){
-        if (this.naoExisteEsteEmailENome(usuario)){
+        var senhaCriptografada = passwordEncoder.encoderPassword(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+        if (this.naoExisteEsteEmail(usuario)){
             return usuarioRepository.save(usuario);
         }
         return null;
@@ -49,7 +54,7 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario updateUser(Long id, Usuario usuario) {
-        if (this.naoExisteEsteEmailENome(usuario)) {
+        if (this.naoExisteEsteEmail(usuario)) {
             return usuarioRepository.findById(id)
                     .map(novo -> {
                         novo.setNome(usuario.getNome());
@@ -60,11 +65,9 @@ public class UsuarioService implements UserDetailsService {
        return null;
     }
 
-    private boolean naoExisteEsteEmailENome(Usuario usuario){
+    private boolean naoExisteEsteEmail(Usuario usuario){
         if (usuarioRepository.existsByEmail(usuario.getEmail())){
             throw new EmailJaExistente();
-        } else if (usuarioRepository.existsByNome(usuario.getNome())){
-            throw new NomeJaExistente();
         }
         return true;
     }

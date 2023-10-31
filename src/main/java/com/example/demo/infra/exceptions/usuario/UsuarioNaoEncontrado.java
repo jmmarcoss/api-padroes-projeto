@@ -1,4 +1,4 @@
-package com.example.demo.infra.exceptions;
+package com.example.demo.infra.exceptions.usuario;
 
 public class UsuarioNaoEncontrado extends RuntimeException {
     public UsuarioNaoEncontrado() {

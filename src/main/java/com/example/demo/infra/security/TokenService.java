@@ -14,6 +14,17 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
+    private static TokenService instance;
+
+    private TokenService(){}
+
+    public static TokenService getInstance(){
+        if (instance == null){
+            instance = new TokenService();
+        }
+        return instance;
+    }
+
     public String gerarToken(Usuario usuario){
         try {
             var algorithm = Algorithm.HMAC256("senhaaleatoriaporenquanto");

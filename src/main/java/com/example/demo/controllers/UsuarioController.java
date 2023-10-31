@@ -61,7 +61,6 @@ public class UsuarioController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @Transactional
@@ -73,8 +72,9 @@ public class UsuarioController {
 
     @Transactional
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, usuario));
+    public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody DadosInsertGetUsuario usuario) {
+        var novoUsuario = new Usuario(usuario);
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, novoUsuario));
     }
 
     @Transactional

@@ -1,5 +1,8 @@
 package com.example.demo.infra.exceptions;
 
+import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
+import com.example.demo.infra.exceptions.usuario.NomeJaExistente;
+import com.example.demo.infra.exceptions.usuario.UsuarioNaoEncontrado;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
