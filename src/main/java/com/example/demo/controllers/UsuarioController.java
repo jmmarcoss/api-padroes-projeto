@@ -59,7 +59,7 @@ public class UsuarioController {
             var token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
             return ResponseEntity.ok(new TokenRecord(token));
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         }
     }
 
