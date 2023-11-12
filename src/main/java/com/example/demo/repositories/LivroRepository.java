@@ -14,4 +14,8 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 
     List<Livro> findByAutor(String autor);
 
+    boolean existsByAutor(String autor);
+
+    boolean existsByTitulo(String titulo);
+
 }

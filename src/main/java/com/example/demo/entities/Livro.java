@@ -1,9 +1,7 @@
 package com.example.demo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.demo.enums.Categoria;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -22,15 +20,15 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    private String autor;
-    @NotBlank
     private String titulo;
     @NotBlank
-    private String categoria;
+    private String autor;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
     @NotNull
     private int paginas;
     @NotBlank
-    private LocalDateTime dataDeCriacao;
+    private LocalDateTime dataDePublicacao;
     @NotBlank
     private String urlImg;
 

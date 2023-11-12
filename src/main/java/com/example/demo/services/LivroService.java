@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.entities.Livro;
 import com.example.demo.entities.Usuario;
+import com.example.demo.infra.exceptions.livro.AutorNaoEncontrado;
+import com.example.demo.infra.exceptions.livro.LivroNaoEncontrado;
 import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
 import com.example.demo.infra.exceptions.usuario.NomeJaExistente;
 import com.example.demo.infra.exceptions.usuario.UsuarioNaoEncontrado;
@@ -23,49 +25,22 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
+    public Livro findById(Long id){
+        return livroRepository.findById(id).orElseThrow(LivroNaoEncontrado::new);
+    }
+
     public List<Livro> findByAutor(String autor){
+        if (!livroRepository.existsByAutor(autor)){
+            throw  new AutorNaoEncontrado();
+        }
         return livroRepository.findByAutor(autor);
     }
 
-    public Livro findById(Long id){
-        return livroRepository.findById(id).orElseThrow(RuntimeException::new);
-    }
-
-    public void deleteById(Long id){
-        if (!livroRepository.existsById(id)){
-            throw new RuntimeException();
+    public Livro findByTitulo(String titulo){
+        if (!livroRepository.existsByTitulo(titulo)){
+            throw new LivroNaoEncontrado();
         }
-        livroRepository.deleteById(id);
+        return livroRepository.findByTitulo(titulo);
     }
 
-//    public Livro insert(Livro livro){
-//        if (this.naoExisteEsteEmailENome(usuario)){
-//            return usuarioRepository.save(usuario);
-//        }
-//        return null;
-//    }
-//
-//    public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
-//
-//
-//    public Usuario updateUser(Long id, Usuario usuario) {
-//        if (this.naoExisteEsteEmailENome(usuario)) {
-//            return usuarioRepository.findById(id)
-//                    .map(novo -> {
-//                        novo.setNome(usuario.getNome());
-//                        novo.setSenha(usuario.getSenha());
-//                        return usuarioRepository.save(novo);
-//                    }).orElseThrow(RuntimeException::new);
-//        }
-//        return null;
-//    }
-//
-//    private boolean naoExisteEsteEmailENome(Usuario usuario){
-//        if (usuarioRepository.existsByEmail(usuario.getEmail())){
-//            throw new EmailJaExistente();
-//        } else if (usuarioRepository.existsByNome(usuario.getNome())){
-//            throw new NomeJaExistente();
-//        }
-//        return true;
-//    }
 }

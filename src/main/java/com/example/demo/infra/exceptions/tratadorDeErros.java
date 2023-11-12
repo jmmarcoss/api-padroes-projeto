@@ -1,5 +1,7 @@
 package com.example.demo.infra.exceptions;
 
+import com.example.demo.infra.exceptions.livro.AutorNaoEncontrado;
+import com.example.demo.infra.exceptions.livro.LivroNaoEncontrado;
 import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
 import com.example.demo.infra.exceptions.usuario.NomeJaExistente;
 import com.example.demo.infra.exceptions.usuario.UsuarioNaoEncontrado;
@@ -26,6 +28,16 @@ public class tratadorDeErros {
     @ExceptionHandler(EmailJaExistente.class)
     public ResponseEntity emailJaExistente(){
         return ResponseEntity.badRequest().body("Email já existente");
+    }
+
+    @ExceptionHandler(LivroNaoEncontrado.class)
+    public ResponseEntity livroNaoEncontrado(){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(AutorNaoEncontrado.class)
+    public ResponseEntity autorNaoEncontrado(){
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(NomeJaExistente.class)
