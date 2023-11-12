@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Livro;
+import com.example.demo.records.livro.AutorRecord;
+import com.example.demo.records.livro.TituloRecord;
 import com.example.demo.services.LivroService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +30,13 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.OK).body(livroService.findById(id));
     }
 
+    @PostMapping(value = "/autor")
+    public ResponseEntity<List<Livro>> findByAutor(@PathVariable AutorRecord autor){
+        return ResponseEntity.status(HttpStatus.OK).body(livroService.findByAutor(autor.autor()));
+    }
+
+    @PostMapping(value = "/titulo")
+    public ResponseEntity<Livro> findByTitulo(@PathVariable TituloRecord titulo){
+        return ResponseEntity.status(HttpStatus.OK).body(livroService.findByTitulo(titulo.titulo()));
+    }
 }
