@@ -28,8 +28,10 @@ public class Livro {
     @NotNull
     private int paginas;
     @NotBlank
+    @Column(name = "data_de_publicacao")
     private LocalDateTime dataDePublicacao;
     @NotBlank
+    @Column(name = "url_img")
     private String urlImg;
 
 
