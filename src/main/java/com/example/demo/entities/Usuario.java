@@ -33,7 +33,9 @@ public class Usuario implements UserDetails {
     @NotBlank
     private String senha;
 
+    @Column(name = "tempoMedioPorPagina")
     private Double tempoMedioPorPagina;
+    @Column(name = "tempoTotalDeLeitura")
     private Double tempoTotalDeLeitura;
 
     public Usuario(DadosInsertGetUsuario usuario) {
