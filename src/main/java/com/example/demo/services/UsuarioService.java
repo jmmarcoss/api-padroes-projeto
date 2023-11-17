@@ -46,7 +46,12 @@ public class UsuarioService implements UserDetailsService {
         return null;
     }
 
-    public Usuario findByEmail(String email) { return usuarioRepository.findByEmail(email); }
+    public Usuario findByEmail(String email) {
+        if (!usuarioRepository.existsByEmail(email)){
+            throw new UsuarioNaoEncontrado();
+        }
+        return usuarioRepository.findByEmail(email);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
