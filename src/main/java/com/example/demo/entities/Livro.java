@@ -26,6 +26,7 @@ public class Livro {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
     @NotNull
+    @Column(name = "qtd_paginas")
     private int paginas;
     @NotBlank
     @Column(name = "data_de_publicacao")
