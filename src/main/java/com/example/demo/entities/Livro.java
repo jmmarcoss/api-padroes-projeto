@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@Entity
+@Entity(name = "livros")
 public class Livro {
 
     @Id
@@ -31,7 +31,7 @@ public class Livro {
     @Column(name = "data_de_publicacao")
     private LocalDateTime dataDePublicacao;
     @NotBlank
-    @Column(name = "url_img")
+    @Column(name = "url_imagem")
     private String urlImg;
 
 

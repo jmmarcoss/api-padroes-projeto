@@ -2,12 +2,12 @@ package com.example.demo.enums;
 
 public enum Categoria {
 
-    ROMANCE,
-    TERROR,
-    BIOGRAFIA,
-    POESIA,
-    COMEDIA,
-    AVENTURA,
-    FANTASIA,
-    FICÇÃOCIENTIFICA;
+    Romance,
+    Terror,
+    Biografia,
+    Poesia,
+    Comedia,
+    Aventura,
+    Fantasia,
+    Ficção_Científica;
 }
