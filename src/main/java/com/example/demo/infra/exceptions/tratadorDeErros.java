@@ -1,5 +1,6 @@
 package com.example.demo.infra.exceptions;
 
+import com.example.demo.infra.exceptions.favorito.FavoritoNaoExistente;
 import com.example.demo.infra.exceptions.livro.AutorNaoEncontrado;
 import com.example.demo.infra.exceptions.livro.LivroNaoEncontrado;
 import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
@@ -37,6 +38,11 @@ public class tratadorDeErros {
 
     @ExceptionHandler(AutorNaoEncontrado.class)
     public ResponseEntity autorNaoEncontrado(){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(FavoritoNaoExistente.class)
+    public ResponseEntity FavoritoNaoExistente(){
         return ResponseEntity.notFound().build();
     }
 
