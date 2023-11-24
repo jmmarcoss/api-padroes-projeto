@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FavoritoBuilder {
 
-
     private Favorito favorito;
 
     public FavoritoBuilder(){

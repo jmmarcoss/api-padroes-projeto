@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Entity(name = "finalizados")
+@Table(name = "finalizados")
 public class Finalizado {
 
     @Id

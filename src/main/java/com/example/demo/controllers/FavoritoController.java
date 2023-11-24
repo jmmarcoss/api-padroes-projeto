@@ -32,7 +32,7 @@ public class FavoritoController {
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findById(id));
     }
 
-    @GetMapping(value = "/usuario/{id}")
+    @GetMapping(value = "/favorito/{id}")
     public ResponseEntity<List<Favorito>> findByUsuarioId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAllPerUsuario(id));
     }
@@ -43,10 +43,10 @@ public class FavoritoController {
     }
 
     @Transactional
-    @PostMapping(value = "/favoritar")
+    @PostMapping
     public ResponseEntity<Favorito> insert(@RequestBody FavoritoEntrada favorito, UriComponentsBuilder uriBuilder){
         var novoFavorito = favoritoService.insert(favorito);
-        var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoFavorito.getId()).toUri();
+        var uri = uriBuilder.path("/favorito/{id}").buildAndExpand(novoFavorito.getId()).toUri();
         return ResponseEntity.created(uri).body(novoFavorito);
     }
 

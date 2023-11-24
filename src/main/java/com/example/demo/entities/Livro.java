@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Entity(name = "livros")
+@Table(name = "livros")
 public class Livro {
 
     @Id

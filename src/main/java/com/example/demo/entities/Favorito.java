@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Entity(name = "favoritos")
+@Table(name = "favoritos")
 public class Favorito {
 
     @Id
