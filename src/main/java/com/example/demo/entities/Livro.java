@@ -26,6 +26,8 @@ public class Livro {
     private String titulo;
     @NotBlank
     private String autor;
+    @NotBlank
+    private String descricao;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
     @NotNull

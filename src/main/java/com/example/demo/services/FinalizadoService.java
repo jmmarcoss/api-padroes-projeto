@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.builders.FinalizadoBuilder;
 import com.example.demo.entities.Finalizado;
 import com.example.demo.records.finalizado.FinalizadoEntrada;
 import com.example.demo.repositories.FavoritoRepository;
@@ -34,8 +35,14 @@ public class FinalizadoService {
     public Finalizado insert(FinalizadoEntrada finalizadoEntrada){
         var usuario = this.usuarioService.findById(finalizadoEntrada.usuarioId());
         var livro = this.livroService.findById(finalizadoEntrada.livroId());
-        var novoFinalizado = new Finalizado(usuario, livro, finalizadoEntrada.dataInicioDeLeitura(), finalizadoEntrada.dataTerminoDeLietura()
-        ,finalizadoEntrada.minutos(), finalizadoEntrada.tempoMedioPorPagina());
+        var novoFinalizado = new FinalizadoBuilder()
+                .setUsuarioId(usuario)
+                .setLivroId(livro)
+                .setDataInicioDeLeitura(finalizadoEntrada.dataInicioDeLeitura())
+                .setDataTerminoDeLeitura(finalizadoEntrada.dataTerminoDeLietura())
+                .setMinutos(finalizadoEntrada.minutos())
+                .setTempoMedioPorPagina(finalizadoEntrada.tempoMedioPorPagina())
+                .build();
         return this.finalizadoRepository.save(novoFinalizado);
     }
 
