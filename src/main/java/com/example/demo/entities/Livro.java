@@ -36,18 +36,7 @@ public class Livro {
     @NotBlank
     @Column(name = "url_imagem")
     private String urlImg;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "livro_id")
-    private List<Favorito> favoritos;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "livro_id")
-    private List<Finalizado> finalizados;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "livro_id")
-    private List<Lendo> lendo;
+
 
 
 

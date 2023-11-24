@@ -34,19 +34,6 @@ public class Usuario implements UserDetails {
     @NotBlank
     private String senha;
 
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "usuario_id")
-    private List<Favorito> favoritos;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "usuario_id")
-    private List<Finalizado> finalizados;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "usuario_id")
-    private List<Lendo> lendo;
-
     @Column(name = "tempo_medio_por_pagina")
     private Double tempoMedioPorPagina;
     @Column(name = "tempo_total_de_leitura")

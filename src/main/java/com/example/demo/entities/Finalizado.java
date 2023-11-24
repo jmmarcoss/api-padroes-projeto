@@ -16,11 +16,11 @@ public class Finalizado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "usuario_id")
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuarioId;
-    @Column(name = "livro_id")
     @ManyToOne
+    @JoinColumn(name = "livro_id")
     private Livro livroId;
     @Column(name = "data_inicio_de_leitura")
     private Date dataInicioDeLeitura;

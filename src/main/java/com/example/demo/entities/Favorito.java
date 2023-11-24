@@ -14,11 +14,11 @@ public class Favorito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "usuario_id")
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuarioId;
-    @Column(name = "livro_id")
     @ManyToOne
+    @JoinColumn(name = "livro_id")
     private Livro livroId;
 
     public Favorito(Usuario usuarioId, Livro livroId) {
