@@ -1,12 +1,14 @@
 package com.example.demo.entities;
 
 import com.example.demo.enums.Categoria;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +36,20 @@ public class Livro {
     @NotBlank
     @Column(name = "url_imagem")
     private String urlImg;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "livro_id")
+    private List<Favorito> favoritos;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "livro_id")
+    private List<Finalizado> finalizados;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "livro_id")
+    private List<Lendo> lendo;
+
+
 
 
 }

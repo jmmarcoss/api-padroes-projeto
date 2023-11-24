@@ -1,12 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Favoritos;
-import com.example.demo.entities.Usuario;
+import com.example.demo.entities.Favorito;
 import com.example.demo.records.favorito.FavoritoEntrada;
-import com.example.demo.records.usuario.DadosInsertGetUsuario;
 import com.example.demo.services.FavoritoService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,28 +23,28 @@ public class FavoritoController {
 
 
     @GetMapping
-    public ResponseEntity<List<Favoritos>> findAll(){
+    public ResponseEntity<List<Favorito>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAll());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Favoritos> findById(@PathVariable Long id){
+    public ResponseEntity<Favorito> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findById(id));
     }
 
     @GetMapping(value = "/usuario/{id}")
-    public ResponseEntity<List<Favoritos>> findByUsuarioId(@PathVariable Long id){
+    public ResponseEntity<List<Favorito>> findByUsuarioId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAllPerUsuario(id));
     }
 
     @GetMapping(value = "/livro/{id}")
-    public ResponseEntity<List<Favoritos>> findByLivroId(@PathVariable Long id){
+    public ResponseEntity<List<Favorito>> findByLivroId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAllPerLivro(id));
     }
 
     @Transactional
     @PostMapping(value = "/favoritar")
-    public ResponseEntity<Favoritos> insert(@RequestBody FavoritoEntrada favorito, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<Favorito> insert(@RequestBody FavoritoEntrada favorito, UriComponentsBuilder uriBuilder){
         var novoFavorito = favoritoService.insert(favorito);
         var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoFavorito.getId()).toUri();
         return ResponseEntity.created(uri).body(novoFavorito);

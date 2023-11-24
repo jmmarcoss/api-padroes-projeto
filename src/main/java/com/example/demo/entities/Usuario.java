@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import com.example.demo.records.usuario.DadosInsertGetUsuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +33,19 @@ public class Usuario implements UserDetails {
     private String email;
     @NotBlank
     private String senha;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
+    private List<Favorito> favoritos;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
+    private List<Finalizado> finalizados;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
+    private List<Lendo> lendo;
 
     @Column(name = "tempo_medio_por_pagina")
     private Double tempoMedioPorPagina;

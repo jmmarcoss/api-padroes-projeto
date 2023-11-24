@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Entity(name = "favoritos")
-public class Favoritos {
+public class Favorito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Favoritos {
     @ManyToOne
     private Livro livroId;
 
-    public Favoritos(Usuario usuarioId, Livro livroId) {
+    public Favorito(Usuario usuarioId, Livro livroId) {
         this.usuarioId = usuarioId;
         this.livroId = livroId;
     }

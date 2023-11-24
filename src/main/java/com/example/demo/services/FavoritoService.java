@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.entities.Favoritos;
+import com.example.demo.builders.FavoritoBuilder;
+import com.example.demo.entities.Favorito;
 import com.example.demo.infra.exceptions.favorito.FavoritoNaoExistente;
 import com.example.demo.records.favorito.FavoritoEntrada;
 import com.example.demo.repositories.FavoritoRepository;
@@ -20,26 +21,29 @@ public class FavoritoService {
     private LivroService livroService;
 
 
-    public List<Favoritos> findAll(){
+    public List<Favorito> findAll(){
         return favoritoRepository.findAll();
     }
 
-    public Favoritos findById(Long id){
+    public Favorito findById(Long id){
         return favoritoRepository.findById(id).orElseThrow(FavoritoNaoExistente::new);
     }
 
-    public List<Favoritos> findAllPerUsuario(Long id){
+    public List<Favorito> findAllPerUsuario(Long id){
         return favoritoRepository.findByUsuarioId(id);
     }
 
-    public List<Favoritos> findAllPerLivro(Long id){
+    public List<Favorito> findAllPerLivro(Long id){
         return favoritoRepository.findByLivroId(id);
     }
 
-    public Favoritos insert(FavoritoEntrada favorito){
+    public Favorito insert(FavoritoEntrada favorito){
         var usuario = usuarioService.findById(favorito.usuarioId());
         var livro = livroService.findById(favorito.livroId());
-        var favoritoNovo  = new Favoritos(usuario, livro);
+        var favoritoNovo  = new FavoritoBuilder()
+                .setUsuarioId(usuario)
+                .setLivroId(livro)
+                .build();
         return favoritoRepository.save(favoritoNovo);
     }
 

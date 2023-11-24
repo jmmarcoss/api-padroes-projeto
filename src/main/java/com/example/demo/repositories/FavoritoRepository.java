@@ -1,15 +1,15 @@
 package com.example.demo.repositories;
 
-import com.example.demo.entities.Favoritos;
+import com.example.demo.entities.Favorito;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface FavoritoRepository extends JpaRepository<Favoritos, Long> {
+public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
 
-    List<Favoritos> findByUsuarioId(Long id);
+    List<Favorito> findByUsuarioId(Long id);
 
-    List<Favoritos> findByLivroId(Long id);
+    List<Favorito> findByLivroId(Long id);
 }
