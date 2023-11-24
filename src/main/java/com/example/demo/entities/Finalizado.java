@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@Entity(name = "finalizado")
+@Entity(name = "finalizados")
 public class Finalizado {
 
     @Id
