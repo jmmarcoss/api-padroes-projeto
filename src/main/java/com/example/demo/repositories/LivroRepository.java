@@ -16,9 +16,11 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 
     List<Livro> findByAutor(String autor);
 
-    boolean existsByAutor(String autor);
+    @Query("SELECT l FROM livros l WHERE LOWER(l.autor) LIKE %:autor%")
+    List<Livro> existsByAutor(String autor);
 
-    boolean existsByTitulo(String titulo);
+    @Query("SELECT l FROM livros l WHERE LOWER(l.titulo) LIKE %:titulo%")
+    List<Livro> existsByTitulo(String titulo);
 
     List<Livro> findByCategoria(String categoria);
 

@@ -30,14 +30,14 @@ public class LivroService {
     }
 
     public List<Livro> findByAutor(String autor){
-        if (!livroRepository.existsByAutor(autor)){
+        if (livroRepository.existsByAutor(autor).size() == 0){
             throw  new AutorNaoEncontrado();
         }
         return livroRepository.findByAutor(autor);
     }
 
     public List<Livro> findByTitulo(String titulo){
-        if (!livroRepository.existsByTitulo(titulo)){
+        if (livroRepository.existsByTitulo(titulo).size() == 0){
             throw new LivroNaoEncontrado();
         }
         return livroRepository.findByTitulo(titulo);
