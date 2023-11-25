@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -35,7 +36,7 @@ public class Livro {
     private int paginas;
     @NotBlank
     @Column(name = "data_de_publicacao")
-    private LocalDateTime dataDePublicacao;
+    private Date dataDePublicacao;
     @NotBlank
     @Column(name = "url_imagem")
     private String urlImg;
