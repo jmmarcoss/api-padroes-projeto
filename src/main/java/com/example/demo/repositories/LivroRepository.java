@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 
-    @Query("SELECT l FROM livros WHERE LOWER(l.titulo) LIKE %:titulo%")
+    @Query("SELECT l FROM livros l WHERE LOWER(l.titulo) LIKE %:titulo%")
     List<Livro> findByTitulo(String titulo);
 
     List<Livro> findByAutor(String autor);
