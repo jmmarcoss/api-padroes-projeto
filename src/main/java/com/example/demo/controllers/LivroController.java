@@ -37,7 +37,7 @@ public class LivroController {
     }
 
     @PostMapping(value = "/titulo")
-    public ResponseEntity<Livro> findByTitulo(@RequestBody TituloRecord titulo){
+    public ResponseEntity<List<Livro>> findByTitulo(@RequestBody TituloRecord titulo){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.findByTitulo(titulo.titulo()));
     }
 

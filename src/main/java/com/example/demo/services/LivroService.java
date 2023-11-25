@@ -36,7 +36,7 @@ public class LivroService {
         return livroRepository.findByAutor(autor);
     }
 
-    public Livro findByTitulo(String titulo){
+    public List<Livro> findByTitulo(String titulo){
         if (!livroRepository.existsByTitulo(titulo)){
             throw new LivroNaoEncontrado();
         }
