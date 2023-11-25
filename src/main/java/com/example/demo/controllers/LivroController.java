@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Livro;
 import com.example.demo.records.livro.AutorRecord;
+import com.example.demo.records.livro.CategoriaRecord;
 import com.example.demo.records.livro.TituloRecord;
 import com.example.demo.services.LivroService;
 import lombok.AllArgsConstructor;
@@ -31,12 +32,17 @@ public class LivroController {
     }
 
     @PostMapping(value = "/autor")
-    public ResponseEntity<List<Livro>> findByAutor(@PathVariable AutorRecord autor){
+    public ResponseEntity<List<Livro>> findByAutor(@RequestBody AutorRecord autor){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.findByAutor(autor.autor()));
     }
 
     @PostMapping(value = "/titulo")
-    public ResponseEntity<Livro> findByTitulo(@PathVariable TituloRecord titulo){
+    public ResponseEntity<Livro> findByTitulo(@RequestBody TituloRecord titulo){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.findByTitulo(titulo.titulo()));
+    }
+
+    @PostMapping(value = "categoria")
+    public ResponseEntity<List<Livro>> findByCategoria(@RequestBody CategoriaRecord categoria){
+        return ResponseEntity.status(HttpStatus.OK).body(livroService.findByCategoria(categoria.categoria()));
     }
 }

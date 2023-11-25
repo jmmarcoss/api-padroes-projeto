@@ -43,4 +43,8 @@ public class LivroService {
         return livroRepository.findByTitulo(titulo);
     }
 
+    public List<Livro> findByCategoria(String categoria){
+        return this.livroRepository.findByCategoria(categoria);
+    }
+
 }

@@ -29,5 +29,4 @@ public class FavoritoBuilder {
     public Favorito build(){
         return this.favorito;
     }
-
 }
