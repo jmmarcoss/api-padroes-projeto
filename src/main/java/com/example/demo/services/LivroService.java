@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.entities.Livro;
 import com.example.demo.entities.Usuario;
+import com.example.demo.enums.Categoria;
 import com.example.demo.infra.exceptions.livro.AutorNaoEncontrado;
 import com.example.demo.infra.exceptions.livro.LivroNaoEncontrado;
 import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
@@ -43,7 +44,7 @@ public class LivroService {
         return livroRepository.findByTitulo(titulo);
     }
 
-    public List<Livro> findByCategoria(String categoria){
+    public List<Livro> findByCategoria(Categoria categoria){
         return this.livroRepository.findByCategoria(categoria);
     }
 
