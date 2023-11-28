@@ -32,7 +32,7 @@ public class FavoritoController {
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findById(id));
     }
 
-    @GetMapping(value = "/favorito/{id}")
+    @GetMapping(value = "/usuario/{id}")
     public ResponseEntity<List<Favorito>> findByUsuarioId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAllPerUsuario(id));
     }
