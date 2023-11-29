@@ -4,6 +4,7 @@ import com.example.demo.builders.FavoritoBuilder;
 import com.example.demo.entities.Favorito;
 import com.example.demo.infra.exceptions.favorito.FavoritoNaoExistente;
 import com.example.demo.records.favorito.FavoritoEntrada;
+import com.example.demo.records.favorito.FavoritoSaida;
 import com.example.demo.repositories.FavoritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,15 @@ public class FavoritoService {
     private LivroService livroService;
 
 
-    public List<Favorito> findAll(){
-        return favoritoRepository.findAll();
+    public List<FavoritoSaida> findAll(){
+        return favoritoRepository.findAllFav();
     }
 
-    public Favorito findById(Long id){
-        return favoritoRepository.findById(id).orElseThrow(FavoritoNaoExistente::new);
+    public FavoritoSaida findById(Long id){
+        return favoritoRepository.findByIdFav(id).orElseThrow(FavoritoNaoExistente::new);
     }
 
-    public List<Favorito> findAllPerUsuario(Long id){
+    public List<FavoritoSaida> findAllPerUsuario(Long id){
         return favoritoRepository.findByUsuarioId(id);
     }
 

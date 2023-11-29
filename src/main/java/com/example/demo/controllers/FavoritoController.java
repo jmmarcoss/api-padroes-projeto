@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Favorito;
 import com.example.demo.records.favorito.FavoritoEntrada;
+import com.example.demo.records.favorito.FavoritoSaida;
 import com.example.demo.services.FavoritoService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,17 +24,17 @@ public class FavoritoController {
 
 
     @GetMapping
-    public ResponseEntity<List<Favorito>> findAll(){
+    public ResponseEntity<List<FavoritoSaida>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAll());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Favorito> findById(@PathVariable Long id){
+    public ResponseEntity<FavoritoSaida> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findById(id));
     }
 
     @GetMapping(value = "/usuario/{id}")
-    public ResponseEntity<List<Favorito>> findByUsuarioId(@PathVariable Long id){
+    public ResponseEntity<List<FavoritoSaida>> findByUsuarioId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(favoritoService.findAllPerUsuario(id));
     }
 
