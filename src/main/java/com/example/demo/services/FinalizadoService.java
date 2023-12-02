@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.builders.FinalizadoBuilder;
 import com.example.demo.entities.Finalizado;
 import com.example.demo.records.finalizado.FinalizadoEntrada;
+import com.example.demo.records.finalizado.FinalizadoSaida;
 import com.example.demo.repositories.FavoritoRepository;
 import com.example.demo.repositories.FinalizadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,15 @@ public class FinalizadoService {
     @Autowired
     private LivroService livroService;
 
-    public List<Finalizado> findAll(){
-        return this.finalizadoRepository.findAll();
+    public List<FinalizadoSaida> findAll(){
+        return this.finalizadoRepository.findAllFin();
     }
 
-    public Finalizado findById(Long id){
-        return this.finalizadoRepository.findById(id).orElseThrow(RuntimeException::new);
+    public FinalizadoSaida findById(Long id){
+        return this.finalizadoRepository.findByIdFin(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Finalizado> findAllPerUsuarioId(Long id){
+    public List<FinalizadoSaida> findAllPerUsuarioId(Long id){
         return this.finalizadoRepository.findByUsuarioId(id);
     }
 

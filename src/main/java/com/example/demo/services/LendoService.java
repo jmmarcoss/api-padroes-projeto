@@ -1,11 +1,9 @@
 package com.example.demo.services;
 
-import com.example.demo.builders.FinalizadoBuilder;
 import com.example.demo.builders.LendoBuilder;
-import com.example.demo.entities.Finalizado;
 import com.example.demo.entities.Lendo;
-import com.example.demo.records.finalizado.FinalizadoEntrada;
 import com.example.demo.records.lendo.LendoEntrada;
+import com.example.demo.records.lendo.LendoSaida;
 import com.example.demo.repositories.LendoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +20,15 @@ public class LendoService {
     @Autowired
     private LivroService livroService;
 
-    public List<Lendo> findAll(){
-        return this.lendoRepository.findAll();
+    public List<LendoSaida> findAll(){
+        return this.lendoRepository.findAllLen();
     }
 
-    public Lendo findById(Long id){
-        return this.lendoRepository.findById(id).orElseThrow(RuntimeException::new);
+    public LendoSaida findById(Long id){
+        return this.lendoRepository.findByIdLen(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Lendo> findAllPerUsuarioId(Long id){
+    public List<LendoSaida> findAllPerUsuarioId(Long id){
         return this.lendoRepository.findByUsuarioId(id);
     }
 
