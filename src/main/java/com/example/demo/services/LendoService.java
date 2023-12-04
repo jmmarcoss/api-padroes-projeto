@@ -43,8 +43,15 @@ public class LendoService {
                 .setMinutos(lendoEntrada.minutos())
                 .setTempoMedioPorPagina(lendoEntrada.tempoMedioPorPagina())
                 .setPorcentagemLida(lendoEntrada.porcentagemLida())
+                .setQtdDePaginas(lendoEntrada.qntDePaginas())
                 .build();
-        return this.lendoRepository.save(novoLendo);
+        var lendoSalvar  = this.lendoRepository.save(novoLendo);
+        var minutosTotais = this.lendoRepository.somaMinutosTotais(usuario.getId());
+        var paginasTotais = this.lendoRepository.somaPaginasTotais(usuario.getId());
+        usuario.setTempoTotalDeLeitura(minutosTotais);
+        usuario.setTempoMedioPorPagina(paginasTotais/minutosTotais);
+        this.usuarioService.insert(usuario);
+        return lendoSalvar;
     }
 
 }

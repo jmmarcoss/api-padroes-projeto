@@ -50,6 +50,11 @@ public class LendoBuilder {
         return this;
     }
 
+    public LendoBuilder setQtdDePaginas(int qntdDePaginas){
+        this.lendo.setQntDePaginas(qntdDePaginas);
+        return this;
+    }
+
 
 
     public Lendo build(){

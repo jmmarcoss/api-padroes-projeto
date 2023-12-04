@@ -12,13 +12,19 @@ import java.util.Optional;
 @Repository
 public interface LendoRepository extends JpaRepository<Lendo, Long> {
 
-    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida) FROM lendo l JOIN l.usuarioId u WHERE u.id = :id")
+    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) FROM lendo l JOIN l.usuarioId u WHERE u.id = :id")
     List<LendoSaida> findByUsuarioId(Long id);
 
-    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida) FROM lendo l WHERE l.id = :id")
+    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) FROM lendo l WHERE l.id = :id")
     Optional<LendoSaida> findByIdLen(Long id);
 
-    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida) FROM lendo l")
+    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) FROM lendo l")
     List<LendoSaida> findAllLen();
+
+    @Query("SELECT SUM(l.minutos) FROM lendo l JOIN l.usuarioId u WHERE u.id = :id")
+    Double somaMinutosTotais(Long id);
+
+    @Query("SELECT SUM(l.qtdDePaginas) FROM lendo l JOIN l.usuarioId u WHERE u.id = :id")
+    Double somaPaginasTotais(Long id);
 
 }

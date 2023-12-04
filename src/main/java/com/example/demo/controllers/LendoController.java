@@ -44,7 +44,7 @@ public class LendoController {
     @PostMapping
     public ResponseEntity<Lendo> insert(@RequestBody LendoEntrada favorito, UriComponentsBuilder uriBuilder){
         var novoLendo = lendoService.insert(favorito);
-        var uri = uriBuilder.path("/finalizado/{id}").buildAndExpand(novoLendo.getId()).toUri();
+        var uri = uriBuilder.path("/lendo/{id}").buildAndExpand(novoLendo.getId()).toUri();
         return ResponseEntity.created(uri).body(novoLendo);
     }
 }
