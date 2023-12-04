@@ -32,6 +32,6 @@ public class Lendo {
     private Double tempoMedioPorPagina;
     @Column(name = "porcentagem_lida")
     private Double porcentagemLida;
-    @Column(name = "qnt_de_paginas")
+    @Column(name = "qtd_de_paginas")
     private int qntDePaginas;
 }

@@ -4,8 +4,8 @@ import com.example.demo.builders.FinalizadoBuilder;
 import com.example.demo.entities.Finalizado;
 import com.example.demo.records.finalizado.FinalizadoEntrada;
 import com.example.demo.records.finalizado.FinalizadoSaida;
-import com.example.demo.repositories.FavoritoRepository;
 import com.example.demo.repositories.FinalizadoRepository;
+import com.example.demo.repositories.LendoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +20,8 @@ public class FinalizadoService {
     private UsuarioService usuarioService;
     @Autowired
     private LivroService livroService;
+    @Autowired
+    private LendoRepository lendoRepository;
 
     public List<FinalizadoSaida> findAll(){
         return this.finalizadoRepository.findAllFin();
@@ -30,7 +32,8 @@ public class FinalizadoService {
     }
 
     public List<FinalizadoSaida> findAllPerUsuarioId(Long id){
-        return this.finalizadoRepository.findByUsuarioId(id);
+        var usuario = usuarioService.findById(id);
+        return this.finalizadoRepository.findByUsuarioId(usuario.getId());
     }
 
     public Finalizado insert(FinalizadoEntrada finalizadoEntrada){
@@ -39,10 +42,10 @@ public class FinalizadoService {
         var novoFinalizado = new FinalizadoBuilder()
                 .setUsuarioId(usuario)
                 .setLivroId(livro)
-                .setDataInicioDeLeitura(finalizadoEntrada.dataInicioDeLeitura())
-                .setDataTerminoDeLeitura(finalizadoEntrada.dataTerminoDeLietura())
-                .setMinutos(finalizadoEntrada.minutos())
-                .setTempoMedioPorPagina(finalizadoEntrada.tempoMedioPorPagina())
+                .setDataInicioDeLeitura(this.lendoRepository.findMinDataInicioDeLeituraByUsuarioIdAndLivroId(usuario.getId(), livro.getId()))
+                .setDataTerminoDeLeitura(this.lendoRepository.findMaxDataInicioDeLeituraByUsuarioIdAndLivroId(usuario.getId(), livro.getId()))
+                .setMinutos(this.lendoRepository.somaMinutosTotaisPorLivroEUsuario(usuario.getId(), livro.getId()))
+                .setTempoMedioPorPagina(this.lendoRepository.calcularRazaoPaginasPorMinutos(usuario.getId(), livro.getId()))
                 .build();
         return this.finalizadoRepository.save(novoFinalizado);
     }

@@ -4,5 +4,5 @@ import com.example.demo.entities.Livro;
 
 import java.util.Date;
 
-public record FinalizadoSaida(Long id, Livro livroId, Date dataInicioDeLeitura, Date dataTerminoDeLietura, int minutos, Double tempoMedioPorPagina) {
+public record FinalizadoSaida(Long id, Livro livroId, Date dataInicioDeLeitura, Date dataTerminoDeLeitura, int minutos, Double tempoMedioPorPagina) {
 }
