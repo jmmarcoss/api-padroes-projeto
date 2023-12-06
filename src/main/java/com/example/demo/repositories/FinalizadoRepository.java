@@ -20,4 +20,8 @@ public interface FinalizadoRepository extends JpaRepository<Finalizado, Long> {
 
     @Query("SELECT NEW com.example.demo.records.finalizado.FinalizadoSaida(f.id, f.livroId, f.dataInicioDeLeitura, f.dataTerminoDeLeitura, f.minutos, f.tempoMedioPorPagina) FROM finalizados f WHERE f.id = :id")
     Optional<FinalizadoSaida> findByIdFin(Long id);
+
+    @Query("SELECT f FROM finalizados f WHERE f.livroId.id = :id")
+    List<Finalizado> existirInstanciaDoLivro(Long id);
+
 }

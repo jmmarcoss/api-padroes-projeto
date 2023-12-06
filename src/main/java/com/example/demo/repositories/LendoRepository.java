@@ -43,4 +43,5 @@ public interface LendoRepository extends JpaRepository<Lendo, Long> {
     @Query("SELECT l.dataInicioDeLeitura FROM lendo l WHERE l.id = (SELECT MIN(l2.id) FROM lendo l2 WHERE l2.usuarioId.id = :userId AND l2.livroId.id = :livroId)")
     Date findMinDataInicioDeLeituraByUsuarioIdAndLivroId(Long userId, Long livroId);
 
+
 }

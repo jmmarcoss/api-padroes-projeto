@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.builders.FinalizadoBuilder;
 import com.example.demo.entities.Finalizado;
+import com.example.demo.infra.exceptions.finalizado.FinalizadoJaExiste;
 import com.example.demo.records.finalizado.FinalizadoEntrada;
 import com.example.demo.records.finalizado.FinalizadoSaida;
 import com.example.demo.repositories.FinalizadoRepository;
@@ -39,6 +40,9 @@ public class FinalizadoService {
     public Finalizado insert(FinalizadoEntrada finalizadoEntrada){
         var usuario = this.usuarioService.findById(finalizadoEntrada.usuarioId());
         var livro = this.livroService.findById(finalizadoEntrada.livroId());
+        if (this.finalizadoRepository.existirInstanciaDoLivro(livro.getId()).size() != 0){
+            throw new FinalizadoJaExiste();
+        }
         var novoFinalizado = new FinalizadoBuilder()
                 .setUsuarioId(usuario)
                 .setLivroId(livro)

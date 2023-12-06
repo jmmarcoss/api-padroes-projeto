@@ -1,6 +1,8 @@
 package com.example.demo.infra.exceptions;
 
+import com.example.demo.infra.exceptions.favorito.FavoritoJaExiste;
 import com.example.demo.infra.exceptions.favorito.FavoritoNaoExistente;
+import com.example.demo.infra.exceptions.finalizado.FinalizadoJaExiste;
 import com.example.demo.infra.exceptions.livro.AutorNaoEncontrado;
 import com.example.demo.infra.exceptions.livro.LivroNaoEncontrado;
 import com.example.demo.infra.exceptions.usuario.EmailJaExistente;
@@ -29,6 +31,16 @@ public class tratadorDeErros {
     @ExceptionHandler(EmailJaExistente.class)
     public ResponseEntity emailJaExistente(){
         return ResponseEntity.badRequest().body("Email já existente");
+    }
+
+    @ExceptionHandler(FavoritoJaExiste.class)
+    public ResponseEntity favoritoJaExiste(){
+        return ResponseEntity.badRequest().body("Instância do favorito já existe");
+    }
+
+    @ExceptionHandler(FinalizadoJaExiste.class)
+    public ResponseEntity finalizadoJaExiste(){
+        return ResponseEntity.badRequest().body("Instância já existente de finalizado");
     }
 
     @ExceptionHandler(LivroNaoEncontrado.class)

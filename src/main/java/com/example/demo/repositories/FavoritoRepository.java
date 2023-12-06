@@ -24,4 +24,8 @@ public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
 
     @Query("SELECT f FROM favoritos f JOIN f.livroId u WHERE u.id = :id")
     List<Favorito> findByLivroId(Long id);
+
+    @Query("SELECT f FROM favoritos f WHERE f.livroId.id = :id")
+    List<Favorito> existirInstanciaDoLivro(Long id);
+
 }

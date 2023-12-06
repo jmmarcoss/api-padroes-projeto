@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.builders.FavoritoBuilder;
 import com.example.demo.entities.Favorito;
+import com.example.demo.infra.exceptions.favorito.FavoritoJaExiste;
 import com.example.demo.infra.exceptions.favorito.FavoritoNaoExistente;
 import com.example.demo.records.favorito.FavoritoEntrada;
 import com.example.demo.records.favorito.FavoritoSaida;
@@ -39,8 +40,12 @@ public class FavoritoService {
     }
 
     public Favorito insert(FavoritoEntrada favorito){
+
         var usuario = usuarioService.findById(favorito.usuarioId());
         var livro = livroService.findById(favorito.livroId());
+        if (this.favoritoRepository.existirInstanciaDoLivro(livro.getId()).size() != 0){
+            throw new FavoritoJaExiste();
+        }
         var favoritoNovo  = new FavoritoBuilder()
                 .setUsuarioId(usuario)
                 .setLivroId(livro)
