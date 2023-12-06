@@ -13,7 +13,14 @@ import java.util.Optional;
 @Repository
 public interface LendoRepository extends JpaRepository<Lendo, Long> {
 
-    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) FROM lendo l WHERE (l.livroId.id, l.id) IN (SELECT l2.livroId.id, MAX(l2.id) FROM lendo l2 WHERE l2.usuarioId.id = :id GROUP BY l2.livroId.id) AND l.usuarioId.id = :id")
+    @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) " +
+            "FROM lendo l " +
+            "WHERE (l.livroId.id, l.id) IN " +
+            "  (SELECT l2.livroId.id, MAX(l2.id) FROM lendo l2 " +
+            "   WHERE l2.usuarioId.id = :id AND l2.livroId.id NOT IN " +
+            "     (SELECT f.livroId.id FROM finalizados f WHERE f.usuarioId.id = :id) " +
+            "   GROUP BY l2.livroId.id) " +
+            "AND l.usuarioId.id = :id")
     List<LendoSaida> findByUsuarioId(Long id);
 
     @Query("SELECT NEW com.example.demo.records.lendo.LendoSaida(l.id, l.livroId, l.dataInicioDeLeitura, l.dataTerminoDeLeitura, l.minutos, l.tempoMedioPorPagina, l.porcentagemLida, l.qntDePaginas) FROM lendo l WHERE l.id = :id")
